@@ -1,0 +1,2 @@
+Meow|2024-11-28|2024-12-03|cat:1|dog:0
+PResident|2024-12-03|active|jaycee:0|cloyd:1|josh:0
