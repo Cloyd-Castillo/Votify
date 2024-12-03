@@ -38,7 +38,7 @@ Ensure responsive, inclusive, participatory, and representative decision-making 
 - **💡 Future Growth:** The platform can be expanded to support larger-scale elections or opinion polls, aligning with SDG 16 by encouraging peaceful and inclusive societies.
 ---
 
-## VI. **How to Run the Program**
+## IV. **How to Run the Program**
 
 ### **Prerequisites**
 - **Code Editor or IDE** (e.g., Visual Studio Code)
