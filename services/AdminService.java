@@ -84,6 +84,7 @@ public class AdminService {
         savePollsToFile();
         System.out.println("Poll created successfully!");
     }
+    
 
     private void viewPollResults(Scanner scanner) {
         List<Poll> activePolls = polls.stream().filter(Poll::isActive).toList();
@@ -159,7 +160,7 @@ public class AdminService {
             Poll poll = new Poll(parts[0], parts[1]);
 
             if (!"active".equals(parts[2])) {
-                poll.endPoll(parts[2]); // Set end date if poll is not active
+                poll.endPoll(parts[2]); 
             }
 
             for (int i = 3; i < parts.length; i++) {

@@ -1,6 +1,7 @@
 package services;
 
 import models.Poll;
+import models.TimedPoll;
 import utils.FileManager;
 
 import java.util.*;
@@ -92,34 +93,44 @@ public class UserService {
                 activePolls.add(poll);
             }
         }
-
+    
         if (activePolls.isEmpty()) {
             System.out.println("No active polls available.");
             return;
         }
-
-        System.out.println("\nAvailable Active Polls:");
+    
+        System.out.println("Available Active Polls:");
         for (int i = 0; i < activePolls.size(); i++) {
-            System.out.printf("%d. %s\n", i + 1, activePolls.get(i).getTitle());
+            Poll poll = activePolls.get(i);
+            if (poll instanceof TimedPoll timedPoll) {
+                System.out.printf("%d. %s - (This poll will end in %s)\n", 
+                    i + 1, 
+                    poll.getTitle(), 
+                    timedPoll.getEndDateTime()
+                );
+            } else {
+                System.out.printf("%d. %s\n", i + 1, poll.getTitle());
+            }
         }
 
+    
         System.out.print("Select a poll to vote in (or type 0 to cancel): ");
         int choice = getIntInput(scanner) - 1;
-
+    
         if (choice >= 0 && choice < activePolls.size()) {
             Poll poll = activePolls.get(choice);
             userVotes.putIfAbsent(loggedInUser, new HashSet<>());
-
+    
             if (userVotes.get(loggedInUser).contains(poll.getTitle())) {
                 System.out.println("You have already voted in this poll.");
                 return;
             }
-
+    
             System.out.println("Options:");
             poll.getResults().keySet().forEach(System.out::println);
             System.out.print("Enter your vote: ");
             String vote = scanner.nextLine();
-
+    
             if (poll.castVote(loggedInUser, vote)) {
                 userVotes.get(loggedInUser).add(poll.getTitle());
                 savePollsToFile();
@@ -131,14 +142,35 @@ public class UserService {
             System.out.println("Invalid selection. Try again.");
         }
     }
+    
 
     private void viewPollResults(Scanner scanner) {
-        System.out.println("\nPoll Results (for ended polls):");
+        List<Poll> endedPolls = new ArrayList<>();
         for (Poll poll : polls) {
             if (!poll.isActive()) {
-                System.out.println(poll.getTitle() + ":");
-                poll.getResults().forEach((option, votes) -> System.out.printf("%s: %d votes\n", option, votes));
+                endedPolls.add(poll);
             }
+        }
+
+        if (endedPolls.isEmpty()) {
+            System.out.println("No ended polls to display.");
+            return;
+        }
+
+        System.out.println("\nHere's the list of all ended polls:");
+        for (int i = 0; i < endedPolls.size(); i++) {
+            System.out.printf("%d. %s\n", i + 1, endedPolls.get(i).getTitle());
+        }
+
+        System.out.print("Select a poll to view results (or type 0 to cancel): ");
+        int choice = getIntInput(scanner) - 1;
+
+        if (choice >= 0 && choice < endedPolls.size()) {
+            Poll selectedPoll = endedPolls.get(choice);
+            System.out.println("\nResults for " + selectedPoll.getTitle() + ":");
+            selectedPoll.getResults().forEach((option, votes) -> System.out.printf("%s: %d votes\n", option, votes));
+        } else if (choice != -1) {
+            System.out.println("Invalid selection. Try again.");
         }
     }
 
@@ -151,7 +183,7 @@ public class UserService {
             Poll poll = new Poll(parts[0], parts[1]);
 
             if (!"active".equals(parts[2])) {
-                poll.endPoll(parts[2]); // Set end date if poll is not active
+                poll.endPoll(parts[2]); 
             }
 
             for (int i = 3; i < parts.length; i++) {
