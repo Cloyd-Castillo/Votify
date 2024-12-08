@@ -12,8 +12,17 @@ public class UserService {
     private String loggedInUser;
 
     public void registerUser(Scanner scanner) {
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
+        String username;
+        while (true) {
+            System.out.print("Enter username: ");
+            username = scanner.nextLine();
+
+            if (username.length() < 4) {
+                System.out.println("Username must be at least 4 characters long. Please try again.");
+                continue;
+            }
+            break;
+        }
 
         String password;
         while (true) {
