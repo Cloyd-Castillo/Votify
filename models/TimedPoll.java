@@ -24,20 +24,6 @@ public class TimedPoll extends Poll {
     }
 
     @Override
-    public boolean isActive() {
-        return getEndDate() == null;
-    }
-
-    @Override
-    public void endPoll(String endDate) {
-        if (isActive()) {
-            super.endPoll(endDate);
-        } else {
-            System.out.println("Poll is set to end in a certain date");
-        }
-    }
-
-    @Override
     public String toString() {
         String status = isActive() ? "Active" : "Ended";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
