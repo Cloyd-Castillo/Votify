@@ -57,11 +57,11 @@ public class AdminService {
         System.out.print("Enter the title of the poll: ");
         String title = scanner.nextLine();
         String startDate = LocalDate.now().toString();
-
+    
         System.out.println("Is this a timed poll? (yes/no)");
         String timedResponse = scanner.nextLine();
         Poll poll;
-
+    
         if ("yes".equalsIgnoreCase(timedResponse)) {
             System.out.print("Enter duration in days: ");
             int duration = getIntInput(scanner);
@@ -69,7 +69,7 @@ public class AdminService {
         } else {
             poll = new Poll(title, startDate);
         }
-
+    
         System.out.println("Enter the options for the poll. Type 'done' to finish:");
         while (true) {
             System.out.print("Option: ");
@@ -79,11 +79,11 @@ public class AdminService {
             }
             poll.addOption(option);
         }
-
+    
         polls.add(poll);
         savePollsToFile();
         System.out.println("Poll created successfully!");
-    }
+    }    
     
 
     private void viewPollResults(Scanner scanner) {

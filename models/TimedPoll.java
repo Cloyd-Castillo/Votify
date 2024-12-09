@@ -12,25 +12,21 @@ public class TimedPoll extends Poll {
         this.durationDays = durationDays;
     }
 
-    public LocalDate getExpirationDate() {
+    public LocalDate getPlannedEndDate() {
         LocalDate start = LocalDate.parse(getStartDate());
         return start.plusDays(durationDays);
     }
 
-    public String getEndDateTime() {
-        LocalDateTime endDateTime = getExpirationDate().atStartOfDay();
+    public String getPlannedEndDateTime() {
+        LocalDateTime plannedEndDateTime = getPlannedEndDate().atStartOfDay();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy, hh:mm a");
-        return endDateTime.format(formatter);
+        return plannedEndDateTime.format(formatter);
     }
 
     @Override
     public boolean isActive() {
-        if (getEndDate() != null) {
-            return false;
-        }
-
-        LocalDate now = LocalDate.now();
-        return now.isBefore(getExpirationDate());
+        // Poll remains active until the admin ends it manually.
+        return getEndDate() == null;
     }
 
     @Override
@@ -38,14 +34,14 @@ public class TimedPoll extends Poll {
         if (isActive()) {
             super.endPoll(endDate);
         } else {
-            System.out.println("Poll has already expired automatically.");
+            System.out.println("Poll has already been ended.");
         }
     }
 
     @Override
     public String toString() {
-        String status = isActive() ? "Active" : "Ended (Auto-expired)";
+        String status = isActive() ? "Active" : "Ended";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        return super.toString() + " (Timed Poll: " + durationDays + " days, Expires on: " + getExpirationDate().format(formatter) + ", Status: " + status + ")";
+        return super.toString() + " (Timed Poll: " + durationDays + " days, Planned End: " + getPlannedEndDate().format(formatter) + ", Status: " + status + ")";
     }
 }

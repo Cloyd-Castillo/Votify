@@ -112,16 +112,15 @@ public class UserService {
         for (int i = 0; i < activePolls.size(); i++) {
             Poll poll = activePolls.get(i);
             if (poll instanceof TimedPoll timedPoll) {
-                System.out.printf("%d. %s - (This poll will end in %s)\n", 
+                System.out.printf("%d. %s - (Planned end: %s)\n", 
                     i + 1, 
                     poll.getTitle(), 
-                    timedPoll.getEndDateTime()
+                    timedPoll.getPlannedEndDateTime()
                 );
             } else {
                 System.out.printf("%d. %s\n", i + 1, poll.getTitle());
             }
         }
-
     
         System.out.print("Select a poll to vote in (or type 0 to cancel): ");
         int choice = getIntInput(scanner) - 1;
@@ -151,6 +150,7 @@ public class UserService {
             System.out.println("Invalid selection. Try again.");
         }
     }
+    
     
 
     private void viewPollResults(Scanner scanner) {
