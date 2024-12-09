@@ -33,7 +33,7 @@ public class TimedPoll extends Poll {
         if (isActive()) {
             super.endPoll(endDate);
         } else {
-            System.out.println("Poll has already been ended.");
+            System.out.println("Poll is set to end in a certain date");
         }
     }
 
