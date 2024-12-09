@@ -15,7 +15,7 @@ public class Poll {
     public Poll(String title, String startDate) {
         this.title = title;
         this.startDate = startDate;
-        this.endDate = null; // Poll is active by default
+        this.endDate = null;
     }
 
     public String getTitle() {

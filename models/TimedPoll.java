@@ -25,7 +25,6 @@ public class TimedPoll extends Poll {
 
     @Override
     public boolean isActive() {
-        // Poll remains active until the admin ends it manually.
         return getEndDate() == null;
     }
 
