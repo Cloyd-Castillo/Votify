@@ -12,16 +12,15 @@
 ## II. **Application of OOP Principles**
 
 ### **🔒 Encapsulation**
-- Encapsulation is applied through the use of private fields and public getter and setter methods in classes like Poll and TimedPoll. For instance, poll details such as title, options, and votes are encapsulated to prevent direct access from external code, ensuring data integrity and controlled interaction.
+- Encapsulation is demonstrated by restricting direct access to critical fields using private access modifiers. For example, in the User class, the username and password fields are private, and access is provided through controlled getter methods. This ensures data security and maintains the integrity of the User objects while allowing flexibility for future enhancements.
+### **🌳 Inheritance**
+- Inheritance is implemented through the Poll and TimedPoll classes. TimedPoll extends Poll to inherit its properties and methods, while adding specific functionality such as time-bound voting periods. This allows reusability and extension of the base poll features without duplicating code.
 
 ### **🔄 Polymorphism**
-- Polymorphism is evident in the ability to handle both Poll and TimedPoll objects through a common Poll reference. For example, methods like addOption and displayResults behave differently based on the actual type of the poll instance, demonstrating runtime polymorphism.
+- Polymorphism is applied in the handling of polls where objects of both Poll and TimedPoll are treated uniformly through their shared interface. For example, the voting and results display functionalities use polymorphic behavior to interact seamlessly with both regular and timed polls, enhancing flexibility and scalability.
 
 ### **🔍 Abstraction**
-- Abstraction is implemented by defining clear interfaces and methods for essential operations such as addOption, vote, and endPoll. Users and administrators interact with high-level functionality without needing to understand the underlying implementation details.
-
-### **🌳 Inheritance**
-- The system uses inheritance to promote code reuse and hierarchy. The TimedPoll class extends the Poll class, inheriting its attributes and methods while introducing additional functionality specific to timed polls, such as duration management.
+- Abstraction is utilized by dividing the system into high-level components, such as services (AdminService and UserService) and utility classes like FileManager, to hide implementation details. This separation makes the code easier to manage and extend, as users of these services interact with clean, intuitive methods without concerning themselves with the underlying logic.
 
 ---
 
